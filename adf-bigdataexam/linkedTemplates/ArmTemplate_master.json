@@ -7,13 +7,25 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-bigdataexam"
 		},
-		"LS_AzureDataLakeStorage_accountKey": {
+		"AzureDataLakeStorage_ExamPractice_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeStorage'"
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage_ExamPractice'"
 		},
 		"AzureSqlDatabase1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
+		"AzureSqlDatabase_exampractice_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_exampractice'"
+		},
+		"LS_AzureDataLakeStorage_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_AzureDataLakeStorage'"
+		},
+		"AzureDataLakeStorage_ExamPractice_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageaccountnagpexam.dfs.core.windows.net/"
 		},
 		"LS_AzureDataLakeStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -46,11 +58,20 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"LS_AzureDataLakeStorage_accountKey": {
-						"value": "[parameters('LS_AzureDataLakeStorage_accountKey')]"
+					"AzureDataLakeStorage_ExamPractice_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage_ExamPractice_accountKey')]"
 					},
 					"AzureSqlDatabase1_connectionString": {
 						"value": "[parameters('AzureSqlDatabase1_connectionString')]"
+					},
+					"AzureSqlDatabase_exampractice_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_exampractice_connectionString')]"
+					},
+					"LS_AzureDataLakeStorage_accountKey": {
+						"value": "[parameters('LS_AzureDataLakeStorage_accountKey')]"
+					},
+					"AzureDataLakeStorage_ExamPractice_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage_ExamPractice_properties_typeProperties_url')]"
 					},
 					"LS_AzureDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('LS_AzureDataLakeStorage_properties_typeProperties_url')]"
