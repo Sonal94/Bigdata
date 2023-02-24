@@ -7,29 +7,7 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "PersonID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "LastName",
-				"type": "varchar"
-			},
-			{
-				"name": "FirstName",
-				"type": "varchar"
-			},
-			{
-				"name": "Address",
-				"type": "varchar"
-			},
-			{
-				"name": "City",
-				"type": "varchar"
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
 			"table": "Product"
