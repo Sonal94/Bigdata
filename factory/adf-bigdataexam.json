@@ -1,0 +1,9 @@
+{
+	"name": "adf-bigdataexam",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "9ab19aa6-908d-476e-be5f-d8ed8fc880eb",
+		"tenantId": "13a34725-5e80-46b6-a90a-3740adee75ee"
+	}
+}
