@@ -1,0 +1,59 @@
+{
+	"name": "dataflow product",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "StageProductData",
+						"type": "DatasetReference"
+					},
+					"name": "ProductSourceDatafortransformation"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "TransformedProductData",
+						"type": "DatasetReference"
+					},
+					"name": "Sinkproductdata"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Transformeddata"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ProductID as string,",
+				"          Name as string,",
+				"          ProductNumber as string,",
+				"          Color as string,",
+				"          StandardCost as string,",
+				"          ListPrice as string,",
+				"          Size as string,",
+				"          Weight as string,",
+				"          ProductCategoryID as string,",
+				"          ProductModelID as string,",
+				"          SellStartDate as string,",
+				"          SellEndDate as string,",
+				"          ModifiedDate as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> ProductSourceDatafortransformation",
+				"ProductSourceDatafortransformation derive(Color = upper(Color)) ~> Transformeddata",
+				"Transformeddata sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> Sinkproductdata"
+			]
+		}
+	}
+}
