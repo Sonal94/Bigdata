@@ -1,0 +1,81 @@
+{
+	"name": "DataFlowProcessor",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Stage_Data2",
+						"type": "DatasetReference"
+					},
+					"name": "Staging"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "ExportDatatoTable",
+					"rejectedDataLinkedService": {
+						"referenceName": "LS_AzureDataLakeStorage",
+						"type": "LinkedServiceReference"
+					}
+				}
+			],
+			"transformations": [
+				{
+					"name": "Assertion"
+				},
+				{
+					"name": "SplitDatetoDateMonthYear"
+				},
+				{
+					"name": "selectRequiredColumn"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          lon as string,",
+				"          lat as string,",
+				"          temp as string,",
+				"          date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Staging",
+				"Staging assert(expectTrue(endsWith(temp, \"f\") || endsWith(temp, \"c\"), false, 'validtemp', null, temp + \"is not valid\"),",
+				"     expectTrue(between(toInteger(lat), -90, 90), false, 'validlat', null, lat + \"is not valid\"),",
+				"     expectTrue(between(toInteger(lon), -180, 180), false, 'validlon', null, lon + \"is not valid\")) ~> Assertion",
+				"Assertion derive(date = :SplitbySlash[1],",
+				"          month = :SplitbySlash[2],",
+				"          year = :SplitbySlash[3],",
+				"          SplitbySlash := split(date, '/')) ~> SplitDatetoDateMonthYear",
+				"SplitDatetoDateMonthYear select(mapColumn(",
+				"          lat,",
+				"          lon,",
+				"          temp,",
+				"          date,",
+				"          month,",
+				"          year",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectRequiredColumn",
+				"selectRequiredColumn sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     outputAssertFailedRows: true,",
+				"     assertFailure_fileSystem: 'nagp-error-container') ~> ExportDatatoTable"
+			]
+		}
+	}
+}
